@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>mml</string>
+	</array>
+	<key>foldingStartMarker</key>
+	<string>/\*\*|\{\s*$</string>
+	<key>foldingStopMarker</key>
+	<string>\*\*/|^\s*\}</string>
+	<key>keyEquivalent</key>
+	<string>^~M</string>
+	<key>name</key>
+	<string>MML</string>
+	<key>patterns</key>
+	<array>
+		<dict><!-- comment lines -->
+			<key>begin</key>
+			<string>(;|//)</string>
+			<key>end</key>
+			<string>$\n?</string>
+			<key>name</key>
+			<string>comment.mml</string>
+		</dict>
+		<dict><!-- comment blocks -->
+			<key>begin</key>
+			<string>/\*</string>
+			<key>captures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>comment.mml</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\*/</string>
+			<key>name</key>
+			<string>comment.block.mml</string>
+		</dict>
+		<dict><!-- DPCM file settings & strings -->
+			<key>match</key>
+			<string>("[^"]+")</string>
+			<key>name</key>
+			<string>constant.character.mml</string>
+		</dict>
+		<dict><!-- track letters -->
+			<key>match</key>
+			<string>^[\s]*([A-Za-b]+\s*)</string>
+			<key>name</key>
+			<string>keyword.mml</string>
+		</dict>
+		<dict><!-- Number -->
+			<key>match</key>
+			<string>-?([$x][\da-f]+|%[01]+|[\d]+)</string>
+			<key>name</key>
+			<string>constant.numeric.mml</string>
+		</dict>
+		<dict><!-- compiler instructions -->
+			<key>begin</key>
+			<string>^[\s]*#(TITLE|COMPOSER|MAKER|PROGRAMER|OCTAVE-REV|GATE-DENOM|DPCM-RESTSTOP|PITCH-CORRECTION|EX-DISKFM|EX-VRC7|EX-VRC6|EX-NAMCO106|EX-FME7|EX-MMC5|AUTO-BANKSWITCH|BANK-CHANGE|NO-BANKSWITCH|SETBANK|EFFECT-INCLUDE|INCLUDE).*</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>storage.mml</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\n</string>
+		</dict>
+		<dict><!-- macro definitions -->
+			<key>match</key>
+			<string>^[\s]*@([\da-f]+|%[01]+|[\d]+)|^[\s]*@(v|EP|EN|MP|DPCM|FM|N|OP|OT|MW|MH)([\da-f]+|%[01]+|[\d]+)</string>
+			<key>name</key>
+			<string>entity.name.function.mml</string>
+		</dict>
+		<dict><!-- single letter macro definitions (test) -->
+			<key>begin</key>
+			<string>^[\s]*\$[ABCEFGHIJOPQRSTUVWXYZ][\s]*.*</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.mml</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\n</string>
+		</dict>
+		<dict><!-- notes, rests, wait, keyoff -->
+			<key>match</key>
+			<string>([a-g]([\-+]*)|[wrk\}])((([$x][\da-f]+|[\d]+)?\.*)(((\s*\^|[\-~])([$x][\da-f]+|[\d]+)?\.*)*))?(\s*&amp;)?|(@?n)([$x][\da-f]+|[\d]+)(,(([$x][\da-f]+|[\d]+)*\.*)(([\^\-~]([$x][\da-f]+|[\d]+)*\.*)*))?</string>
+			<key>name</key>
+			<string>variable.mml</string>
+		</dict>
+		<dict><!-- octave/pitch shift commands -->
+			<key>match</key>
+			<string>o([$x][0-8]|%[01]+|[0-8])|[&gt;&lt;]|D(-?([$x][\da-f]+|%[01]+|[\d]+))|(EP|MP|EN|SM)(OF|([$x][\da-f]+|%[01]+|[\d]+))|PS|s([$x][\da-f]+|%[01]+|[\d]+)(,([$x][\da-f]+|%[01]+|[\d]+))?|K(-?([$x][\da-f]+|%[01]+|[\d]+))|SA([$x][0-8]|%[01]+|[0-8])</string>
+			<key>name</key>
+			<string>support.function.mml</string>
+		</dict>
+		<dict><!-- tempo, length, quantize -->
+			<key>match</key>
+			<string>l(([$x][\da-f]+|[\d]+)\.*)(([\-~]([$x][\da-f]+|[\d]+)*\.*)*)?|t([$x][\da-f]+|%[01]+|[\d]+)|@t([$x][\da-f]+|%[01]+|[\d]+),([$x][\da-f]+|%[01]+|[\d]+)|q([$x][\da-f]+|%[01]+|[\d]+)(,[\-\+]?([$x][\da-f]+|%[01]+|[\d]+))?|@q([$x][\da-f]+|%[01]+|[\d]+)</string>
+			<key>name</key>
+			<string>entity.name.tag.mml</string>
+		</dict>
+		<dict><!-- volume, envelope, hardware envelope -->
+			<key>match</key>
+			<string>v[\-+]?([$x][\da-f]+|%[01]+|[\d]+)|@v[r]?([$x][\da-f]+|%[01]+|[\d]+)|EH[$x%]?[01],([$x][\da-f]+|%[01]+|[\d]+)</string>
+			<key>name</key>
+			<string>entity.other.attribute-name.mml</string>
+		</dict>
+		<dict><!-- duty cycle envelope, FDS hardware effects -->
+			<key>match</key>
+			<string>(@[@]?[r]?|OP|[SMN])([$x][\da-f]+|%[01]+|[\d]+)|MH(OF|([$x][\da-f]+|%[01]+|[\d]+))</string>
+			<key>name</key>
+			<string>entity.other.inherited-class.mml</string>
+		</dict>
+		<dict><!-- loop position, data skipper -->
+			<key>match</key>
+			<string>\s*[L!]</string>
+			<key>name</key>
+			<string>storage.mml</string>
+		</dict>
+		<dict><!-- self delay, register controls, bank changes -->
+			<key>match</key>
+			<string>SD(OF|([$x][\da-f]+|%[01]+|[\d]+))|[xy]([$x][\da-f]+|%[01]+|[\d]+),([$x][\da-f]+|%[01]+|[\d]+)|NB([$x][\da-f]+|%[01]+|[\d]+)?</string>
+			<key>name</key>
+			<string>string.mml</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>song.mml</string>
+	<key>uuid</key>
+	<string>C914C3E8-3E0E-405E-97FB-0081B2F56430</string>
+</dict>
+</plist>
